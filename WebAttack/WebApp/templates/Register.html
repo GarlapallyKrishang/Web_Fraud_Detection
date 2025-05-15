@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register | Web Attack Detection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function validate() {
+      var x = document.forms["f1"]["username"].value;
+      var y = document.forms["f1"]["password"].value;
+      var c = document.forms["f1"]["contact"].value;
+      var e = document.forms["f1"]["email"].value;
+      var a = document.forms["f1"]["address"].value;
+
+      if (x == "") { alert("Username must be entered"); return false; }
+      if (y == "") { alert("Password must be entered"); return false; }
+      if (c == "") { alert("Contact No must be entered"); return false; }
+      if (isNaN(c)) { alert("Please enter valid contact number"); return false; }
+      if (e == "") { alert("Email ID must be entered"); return false; }
+      var filter = /^([a-zA-Z0-9_\.\-])+\@(gmail+\.)+(com)+$/;
+      if (!filter.test(e)) { alert("Enter a valid email address"); return false; }
+      if (a == "") { alert("Address must be entered"); return false; }
+
+      return true;
+    }
+  </script>
+</head>
+<body class="min-h-screen flex items-center justify-center font-sans text-white" style=" background: url('{% static "images/cyber-security-concept-digital-art_23-2151637760.avif" %}') no-repeat center center fixed; background-size: cover;">
+  <div class="w-full max-w-lg px-8 py-10 bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 transition-all duration-300 animate-fadeIn">
+    <h2 class="text-3xl font-extrabold text-center text-yellow-400 mb-6 tracking-wide">New User Registration</h2>
+
+    <form name="f1" method="post" action="{% url 'Signup' %}" onsubmit="return validate()" class="space-y-5">
+      {% csrf_token %}
+      <p class="text-center text-yellow-400 text-sm">{{ data }}</p>
+
+      <div>
+        <label class="block text-sm font-medium text-cyan-100 mb-1">Username</label>
+        <input type="text" name="username" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-black focus:outline-none focus:ring-2 focus:ring-cyan-300" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-cyan-100 mb-1">Password</label>
+        <input type="password" name="password" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-black focus:outline-none focus:ring-2 focus:ring-cyan-300" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-cyan-100 mb-1">Contact No</label>
+        <input type="text" name="contact" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-black focus:outline-none focus:ring-2 focus:ring-cyan-300" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-cyan-100 mb-1">Email ID</label>
+        <input type="text" name="email" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-black focus:outline-none focus:ring-2 focus:ring-cyan-300" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-cyan-100 mb-1">Address</label>
+        <input type="text" name="address" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-black focus:outline-none focus:ring-2 focus:ring-cyan-300" />
+      </div>
+
+      <button type="submit" class="w-full py-3 bg-yellow-400 text-black font-bold rounded-lg hover:bg-yellow-500 transition duration-200 shadow-lg">
+        Register
+      </button>
+    </form>
+
+    <div class="mt-6 text-center text-sm text-gray-300 space-x-2">
+      <a href="{% url 'index' %}" class="hover:text-cyan-300 transition">Back to Home</a> |
+      <a href="{% url 'index' %}" class="hover:text-cyan-300 transition">Login</a>
+    </div>
+  </div>
+
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fadeIn {
+      animation: fadeIn 1s ease-out;
+    }
+  </style>
+</body>
+</html>

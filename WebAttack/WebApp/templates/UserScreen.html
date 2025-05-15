@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard | Web Attack Detection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            cyber: '#00f7ff',
+            darkBg: '#0f172a',
+          },
+        }
+      }
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    }
+
+    .neon-glow {
+      box-shadow: 0 0 8px #00f7ff, 0 0 20px #00f7ff60;
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.9s ease-out forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Force table content to be white */
+    .injected-table-container table,
+    .injected-table-container th,
+    .injected-table-container td {
+      color: white !important;
+      border-color: #ffffff44 !important;
+    }
+  </style>
+</head>
+<body 
+  class="bg-darkBg font-poppins text-white min-h-screen bg-[url({% static 'images/ui.webp' %})] bg-cover bg-center bg-no-repeat bg-blend-overlay flex items-center justify-center px-4"
+>
+  <div class="w-full max-w-6xl glass rounded-2xl p-10 fade-in-up">
+
+    <!-- Hero Section -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl font-bold text-cyber">Welcome 👋</h1>
+      <p class="text-gray-300 mt-2 text-lg">Explore Attack Detection Features from Dashboard.</p>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a href="{% url 'Upload' %}" class="group neon-glow p-6 rounded-xl text-center bg-white/10 hover:bg-white/20 transition flex flex-col items-center space-y-3">
+        <i data-lucide="upload" class="w-8 h-8 text-cyber group-hover:scale-110 transition"></i>
+        <span class="text-lg font-semibold">Load Data Set</span>
+      </a>
+
+      <a href="{% url 'RunExisting' %}" class="group neon-glow p-6 rounded-xl text-center bg-white/10 hover:bg-white/20 transition flex flex-col items-center space-y-3">
+        <i data-lucide="shield-check" class="w-8 h-8 text-cyber group-hover:scale-110 transition"></i>
+        <span class="text-lg font-semibold">Run Existing</span>
+      </a>
+
+      <a href="{% url 'RunPropose' %}" class="group neon-glow p-6 rounded-xl text-center bg-white/10 hover:bg-white/20 transition flex flex-col items-center space-y-3">
+        <i data-lucide="bar-chart-3" class="w-8 h-8 text-cyber group-hover:scale-110 transition"></i>
+        <span class="text-lg font-semibold">AutoEncoder</span>
+      </a>
+
+      <a href="{% url 'RunExtension' %}" class="group neon-glow p-6 rounded-xl text-center bg-white/10 hover:bg-white/20 transition flex flex-col items-center space-y-3">
+        <i data-lucide="activity" class="w-8 h-8 text-cyber group-hover:scale-110 transition"></i>
+        <span class="text-lg font-semibold">LSTM Extension</span>
+      </a>
+
+      <a href="{% url 'Graph' %}" class="group neon-glow p-6 rounded-xl text-center bg-white/10 hover:bg-white/20 transition flex flex-col items-center space-y-3">
+        <i data-lucide="trending-up" class="w-8 h-8 text-cyber group-hover:scale-110 transition"></i>
+        <span class="text-lg font-semibold">Visualization</span>
+      </a>
+
+      <a href="{% url 'Predict' %}" class="group neon-glow p-6 rounded-xl text-center bg-white/10 hover:bg-white/20 transition flex flex-col items-center space-y-3">
+        <i data-lucide="cpu" class="w-8 h-8 text-cyber group-hover:scale-110 transition"></i>
+        <span class="text-lg font-semibold">Predict Attacks</span>
+      </a>
+
+      <a href="{% url 'index' %}" class="group neon-glow p-6 rounded-xl text-center bg-red-500/20 hover:bg-red-600/30 border border-red-500/10 transition flex flex-col items-center space-y-3">
+        <i data-lucide="log-out" class="w-8 h-8 text-red-300 group-hover:scale-110 transition"></i>
+        <span class="text-lg font-semibold text-red-300">Logout</span>
+      </a>
+    </div>
+
+    <!-- Injected Table/Output Data -->
+    <div class="mt-10 overflow-x-auto">
+      <div class="rounded-lg shadow border border-cyber p-4 bg-darkBg injected-table-container text-sm">
+        {{ data|safe }}
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Optional JS fallback to override any inline styles
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll(".injected-table-container td, .injected-table-container th").forEach(el => {
+        el.style.color = "white";
+      });
+    });
+  </script>
+</body>
+</html>

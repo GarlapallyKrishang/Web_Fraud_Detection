@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Dataset | Web Attack Detection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            cyber: '#00f7ff',
+            darkBg: '#0f172a',
+          },
+        }
+      }
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-darkBg bg-[url('{% static 'images/ui.webp' %}')] bg-cover bg-center bg-no-repeat bg-blend-overlay text-white font-poppins min-h-screen">
+
+  <!-- Top Nav Bar -->
+  <nav class="w-full glass fixed top-0 z-50 px-6 py-4 flex justify-between items-center backdrop-blur-sm">
+    <h1 class="text-cyber text-xl font-semibold">Web Attack Detection</h1>
+    <ul class="flex space-x-4 text-sm font-medium">
+      <li><a href="{% url 'Upload' %}" class="hover:text-cyber">Load Dataset</a></li>
+      <li><a href="{% url 'RunExisting' %}" class="hover:text-cyber">Run Existing</a></li>
+      <li><a href="{% url 'RunPropose' %}" class="hover:text-cyber">AutoEncoder</a></li>
+      <li><a href="{% url 'RunExtension' %}" class="hover:text-cyber">Extension LSTM</a></li>
+      <li><a href="{% url 'Graph' %}" class="hover:text-cyber">Graph</a></li>
+      <li><a href="{% url 'Predict' %}" class="hover:text-cyber">Predict Attacks</a></li>
+      <li><a href="{% url 'index' %}" class="text-red-400 hover:text-red-500">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Upload Section -->
+  <div class="flex justify-center items-center pt-28 pb-12 px-6">
+    <div class="glass max-w-2xl w-full p-8 rounded-2xl text-white shadow-lg">
+      <h2 class="text-2xl font-semibold text-cyber text-center mb-6">Dataset Upload & Processing</h2>
+
+      {% if data %}
+        <div class="bg-green-500/10 text-green-300 text-sm p-3 rounded mb-4 text-center">
+          {{ data|safe }}
+        </div>
+      {% endif %}
+
+      <form name="f1" method="post" action="{% url 'UploadAction' %}" enctype="multipart/form-data" onsubmit="return validate()">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label class="block mb-1">Upload Dataset</label>
+          <input type="file" name="t1" class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded focus:outline-none focus:ring-2 focus:ring-cyber placeholder-white/60" required>
+        </div>
+
+        <div class="flex justify-center">
+          <button type="submit" class="bg-cyber hover:bg-cyber/80 text-darkBg font-semibold py-2 px-6 rounded transition transform hover:scale-105">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function validate() {
+      const fileInput = document.forms["f1"]["t1"].value;
+      if (!fileInput) {
+        alert("Dataset file must be uploaded.");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
+
